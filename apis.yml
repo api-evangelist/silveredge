@@ -1,7 +1,28 @@
 aid: silveredge
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/silveredge.png
 name: Silveredge
-description: Silveredge is a company surfaced as a portfolio company of 500-global and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Silveredge was added to the API Evangelist network as a stub from the 500
+  Global venture portfolio; the website property wired to this record
+  (silverpush.co) presents Silverpush, an AI-powered contextual intelligence
+  company that helps advertisers deliver contextually relevant, brand-safe video
+  advertising across YouTube, CTV, TikTok, Meta, and the open web through its
+  Mirrors contextual intelligence suite and Parallels moment-marketing platform.
+  As of this enrichment pass the company publishes no public API, developer
+  portal, documentation, SDKs, or /.well-known discovery surface — developer
+  subdomains do not resolve and developer paths return 404 — so there is no API
+  artifact surface to harvest. This profile remains a company lead.
 url: https://raw.githubusercontent.com/api-evangelist/silveredge/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,9 +32,15 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
+- Advertising
+- AdTech
+- Contextual Intelligence
+- Artificial Intelligence
+- Video Advertising
+- Marketing
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -23,3 +50,8 @@ maintainers:
 common:
 - type: Website
   url: https://silverpush.co
+x-enrichment:
+  date: '2026-07-21'
+  status: nochange
+  artifacts_added: 0
+  pass: local-v1
