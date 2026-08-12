@@ -1,0 +1,35 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://docs.prebid.org/dev-docs/bidders/silverpush.html,
+  https://github.com/prebid/Prebid.js/blob/master/modules/silverpushBidAdapter.md,
+  https://github.com/prebid/prebid-server/blob/master/static/bidder-info/silverpush.yaml
+limit_count: 0
+limits: []
+headers: []
+exhaustion_status: null
+note: >-
+  No rate limits are published for the Silverpush bid endpoint. The first-party
+  bidder-info registered upstream in prebid-server carries only endpoint,
+  maintainer and capabilities — it declares no QPS ceiling, no
+  `endpointCompression` throttle and no per-publisher cap, and the Prebid.js
+  adapter documentation names none. No RateLimit-*, X-RateLimit-* or Retry-After
+  header is documented, and no 429 behaviour is described. Nothing could be
+  observed live either: the registered HTTPS endpoint would not complete a TLS
+  handshake from this client, so no response headers were obtainable without
+  fabricating them. In practice throughput on an OpenRTB bidder is governed by
+  the auction timeout the calling Prebid instance sets, not by a limit the
+  bidder publishes — but that is the integrator's setting, not a Silverpush
+  limit, so it is not recorded as one. An honest zero.
+x-evidence:
+  fetched: '2026-08-12'
+  probes:
+  - url: https://docs.prebid.org/dev-docs/bidders/silverpush.html
+    status: 200
+    note: no limits documented
+  - url: https://raw.githubusercontent.com/prebid/prebid-server/master/static/bidder-info/silverpush.yaml
+    status: 200
+    note: no throttle fields present
+  - url: https://prebid.chocolateplatform.co/bidder/?identifier=prebidchoc
+    status: 0
+    note: TLS handshake failed (tlsv1 alert internal error); plain HTTP returned 308

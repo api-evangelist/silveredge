@@ -1,28 +1,36 @@
 aid: silveredge
 accessModel:
   pricing: unknown
-  onboarding: unknown
+  onboarding: partner-approval
   trial: false
   try_now: false
   public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  label: Partner
+  confidence: medium
+  source:
+  - https://docs.prebid.org/dev-docs/bidders/silverpush.html
+  generated: '2026-08-12'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/silveredge.png
 name: Silveredge
 description: >-
-  Silveredge was added to the API Evangelist network as a stub from the 500
-  Global venture portfolio; the website property wired to this record
-  (silverpush.co) presents Silverpush, an AI-powered contextual intelligence
-  company that helps advertisers deliver contextually relevant, brand-safe video
-  advertising across YouTube, CTV, TikTok, Meta, and the open web through its
-  Mirrors contextual intelligence suite and Parallels moment-marketing platform.
-  As of this enrichment pass the company publishes no public API, developer
-  portal, documentation, SDKs, or /.well-known discovery surface — developer
-  subdomains do not resolve and developer paths return 404 — so there is no API
-  artifact surface to harvest. This profile remains a company lead.
+  Silveredge is SilverEdge Technologies, the operating entity behind the
+  Silverpush brand — an AI-powered contextual intelligence and video advertising
+  company backed by 500 Global, whose corporate site is silverpush.co. Silverpush
+  sells Mirrors, a contextual intelligence suite for brand-safe video advertising
+  across YouTube, CTV, TikTok, Meta and the open web, and Parallels, a
+  moment-marketing platform. It also operates Chocolate Platform
+  (chocolateplatform.com), the mobile video SSP it acquired with Vdopia, which is
+  publicly branded "Chocolate Platform by SilverPush". Its machine-readable API
+  surface is programmatic rather than REST: Silverpush maintains a first-party
+  OpenRTB bid endpoint registered upstream in Prebid Server and Prebid.js under
+  the bidder code "silverpush", with a published JSON Schema for its bid
+  parameters and a maintainer address of prebid@silverpush.co. Chocolate also
+  documents a first-party mobile mediation SDK for Android, iOS, Unity, Xamarin,
+  Cordova and Cocos2d-x, with public sample apps on GitHub — though every
+  distribution channel that surface advertises now fails to resolve. There is no
+  public REST API, OpenAPI, developer portal, MCP server, agent card or
+  /.well-known discovery surface on any host this company controls.
 url: https://raw.githubusercontent.com/api-evangelist/silveredge/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -32,7 +40,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-12'
 tags:
 - Company
 - Advertising
@@ -41,7 +49,42 @@ tags:
 - Artificial Intelligence
 - Video Advertising
 - Marketing
-apis: []
+- Programmatic Advertising
+- OpenRTB
+- Prebid
+- Supply Side Platform
+- CTV
+- Mobile Advertising
+- Brand Safety
+apis:
+- name: Silverpush Prebid Bidder (Chocolate Ad Exchange)
+  description: >-
+    Silverpush's first-party programmatic bid endpoint, registered upstream in
+    the Prebid ecosystem under the bidder code "silverpush" and maintained from
+    prebid@silverpush.co. It speaks OpenRTB over HTTPS and is reachable through
+    both the Prebid.js client adapter and the Prebid Server adapter. It fronts
+    the Chocolate Ad Exchange, the mobile video SSP Silverpush operates and
+    brands publicly as "Chocolate Platform by SilverPush". Access requires
+    publisher setup and approval by Silverpush, which issues the publisherId
+    that the bid parameter schema requires.
+  humanURL: https://docs.prebid.org/dev-docs/bidders/silverpush.html
+  baseURL: https://prebid.chocolateplatform.co/bidder/
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/silveredge.png
+  tags:
+  - OpenRTB
+  - Prebid
+  - Programmatic Advertising
+  - Header Bidding
+  - Supply Side Platform
+  properties:
+  - type: JSONSchema
+    url: json-schema/silveredge-prebid-bidder-params.json
+  - type: APIReference
+    url: https://docs.prebid.org/dev-docs/bidders/silverpush.html
+  - type: Documentation
+    url: https://github.com/prebid/Prebid.js/blob/master/modules/silverpushBidAdapter.md
+  - type: SourceCode
+    url: https://github.com/prebid/prebid-server/blob/master/static/bidder-info/silverpush.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -50,8 +93,48 @@ maintainers:
 common:
 - type: Website
   url: https://silverpush.co
+- type: Portal
+  url: https://chocolateplatform.com/
+- type: Documentation
+  url: https://chocolateplatform.com/download-sdk
+- type: APIReference
+  url: https://docs.prebid.org/dev-docs/bidders/silverpush.html
+- type: Support
+  url: https://silverpush.co/contact/
+- type: Blog
+  url: https://silverpush.co/blogs/
+- type: GitHubOrganization
+  url: https://github.com/SilverPush
+- type: SignUp
+  url: https://chocolateplatform.com/login
+- type: TermsOfService
+  url: https://silverpush.co/terms-services/
+- type: PrivacyPolicy
+  url: https://silverpush.co/privacy-policy/
+- type: JSONSchema
+  url: json-schema/silveredge-prebid-bidder-params.json
+- type: Packages
+  url: packages/silveredge-packages.yml
+- type: Authentication
+  url: authentication/silveredge-authentication.yml
+- type: Conventions
+  url: conventions/silveredge-conventions.yml
+- type: Conformance
+  url: conformance/silveredge-conformance.yml
+- type: Compliance
+  url: conformance/silveredge-conformance.yml
+- type: Lifecycle
+  url: lifecycle/silveredge-lifecycle.yml
+- type: DomainSecurity
+  url: security/silveredge-domain-security.yml
+- type: Plans
+  url: plans/silveredge-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/silveredge-rate-limits.yml
+- type: LLMsTxt
+  url: llms/silveredge-llms.txt
 x-enrichment:
-  date: '2026-07-21'
-  status: nochange
-  artifacts_added: 0
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 13
   pass: local-v1

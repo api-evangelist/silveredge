@@ -1,0 +1,66 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://docs.prebid.org/dev-docs/bidders/silverpush.html and
+  https://github.com/prebid/prebid-server/blob/master/static/bidder-info/silverpush.yaml
+docs: https://docs.prebid.org/dev-docs/bidders/silverpush.html
+api: Silverpush Prebid Bidder (Chocolate Ad Exchange)
+summary: >-
+  Silverpush publishes no REST API, no OAuth surface and no API-key programme.
+  The only publicly documented way to authenticate against a Silverpush endpoint
+  is the programmatic one: a publisher is onboarded manually by Silverpush, is
+  issued a publisherId, and that identifier is carried inside every OpenRTB bid
+  request the Prebid client or Prebid Server sends to the Chocolate bid endpoint.
+  There is no self-service credential issuance, no token endpoint, no key
+  rotation policy and no scope model published anywhere.
+model: partner-identifier
+self_service: false
+schemes:
+- name: publisherId
+  type: identifier
+  in: body
+  location: imp[].ext.prebid.bidder.silverpush.publisherId
+  required: true
+  issued_by: Silverpush, on approval
+  description: >-
+    Publisher id provided by Silverpush. Declared required in the first-party
+    bid-parameter JSON Schema published upstream at
+    prebid-server/static/bidder-params/silverpush.json. It identifies the seller
+    account the bid request is attributed to; it is not a secret and it is not
+    a bearer credential.
+  spec: json-schema/silveredge-prebid-bidder-params.json
+- name: identifier
+  type: query-parameter
+  in: query
+  location: "?identifier=prebidchoc"
+  required: true
+  description: >-
+    A fixed routing parameter baked into the endpoint URL registered in
+    prebid-server/static/bidder-info/silverpush.yaml
+    (https://prebid.chocolateplatform.co/bidder/?identifier=prebidchoc). It
+    selects the integration path, not the caller — it is identical for every
+    Prebid caller and carries no per-tenant secret.
+onboarding:
+  self_service: false
+  gate: manual approval
+  contact: prebid@silverpush.co
+  quote: >-
+    "The Silverpush Bidder Adapter requires setup and approval before use.
+    Please reach out to prebid@silverpush.co representative for more details."
+    — github.com/prebid/Prebid.js/blob/master/modules/silverpushBidAdapter.md
+gaps:
+- No OAuth 2.0, OIDC, mTLS or API-key scheme is documented on any host.
+- No /.well-known/oauth-authorization-server or /.well-known/openid-configuration is served.
+- No credential rotation, expiry or revocation policy is published.
+- The publisherId is an account identifier, not an authenticated credential; transport-level trust is whatever the OpenRTB HTTPS connection provides.
+x-evidence:
+  fetched: '2026-08-12'
+  probes:
+  - url: https://docs.prebid.org/dev-docs/bidders/silverpush.html
+    status: 200
+  - url: https://raw.githubusercontent.com/prebid/prebid-server/master/static/bidder-info/silverpush.yaml
+    status: 200
+  - url: https://raw.githubusercontent.com/prebid/prebid-server/master/static/bidder-params/silverpush.json
+    status: 200
+  - url: https://silverpush.co/.well-known/oauth-authorization-server
+    status: 404

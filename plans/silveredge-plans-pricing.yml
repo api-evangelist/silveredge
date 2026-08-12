@@ -1,0 +1,35 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://silverpush.co (283-URL sitemap), https://silverpush.co/contact/,
+  https://chocolateplatform.com (27-route SPA route table)
+plan_count: 0
+currency: null
+plans: []
+note: >-
+  Silverpush publishes no pricing of any kind. There is no /pricing or /plans
+  page on silverpush.co — the full 283-URL sitemap contains none — and the
+  Chocolate Platform application defines 27 routes, none of which is a pricing
+  page. Both brands route commercial interest through demand-generation forms:
+  silverpush.co offers "Book a demo", "Request a campaign audit" and /contact/,
+  and chocolateplatform.com offers /contact-us and a publisher partnership page.
+  The programmatic surface is priced through the auction itself rather than a
+  rate card — the only price signal a publisher controls is the optional
+  `bidfloor` bid parameter, which is a floor the publisher sets, not a price
+  Silverpush publishes. This is an enterprise contact-sales posture, recorded as
+  an explicit zero rather than omitted.
+sales_gates:
+- https://silverpush.co/contact/
+- https://silverpush.co/request-campaign-audit/
+- https://chocolateplatform.com/contact-us
+- https://chocolateplatform.com/publisher-partnership-openbidding
+x-evidence:
+  fetched: '2026-08-12'
+  probes:
+  - url: https://silverpush.co/sitemap.xml
+    status: 200
+    note: 283 URLs, no pricing page
+  - url: https://silverpush.co/contact/
+    status: 200
+  - url: https://chocolateplatform.com/download-sdk
+    status: 200

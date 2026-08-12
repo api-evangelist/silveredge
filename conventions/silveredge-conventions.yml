@@ -1,0 +1,99 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  json-schema/silveredge-prebid-bidder-params.json,
+  json-schema/silveredge-prebid-bidder-info.yaml,
+  https://docs.prebid.org/dev-docs/bidders/silverpush.html
+summary: >-
+  Silverpush's only callable surface is an OpenRTB bid endpoint reached through
+  Prebid, so its runtime semantics are the OpenRTB/Prebid conventions rather
+  than anything the company documents itself. Almost every cross-cutting
+  behaviour an agent would need — idempotency, pagination, versioning, error
+  envelope, rate-limit signalling, request tracing — is simply not published.
+  This artifact records what IS knowable and marks the rest as absent rather
+  than guessing.
+api: Silverpush Prebid Bidder (Chocolate Ad Exchange)
+transport:
+  protocol: https
+  method: POST
+  endpoint: https://prebid.chocolateplatform.co/bidder/?identifier=prebidchoc
+  content_type: application/json
+  payload: OpenRTB 2.x BidRequest
+  response: OpenRTB 2.x BidResponse
+  note: >-
+    HTTPS to the registered endpoint failed TLS negotiation from this client on
+    2026-08-12 (tlsv1 alert internal error); plain HTTP answered 308. The host
+    resolves (143.244.220.62) but its TLS configuration would not complete a
+    handshake with LibreSSL 3.3.6. Recorded as observed, not as a verdict.
+auth_style:
+  model: partner-identifier
+  detail: publisherId issued on approval; see authentication/silveredge-authentication.yml
+media_types:
+  supported:
+  - banner
+  - video
+  contexts:
+  - site
+  - app
+  multiformat: will-bid-on-one
+  note: >-
+    Declared in the first-party bidder-info capabilities block and the Prebid
+    bidder page. "will-bid-on-one" means a multi-format ad unit gets a bid on
+    one format only.
+parameters:
+  required:
+  - name: publisherId
+    type: string
+    description: Publisher id provided by Silverpush.
+  optional:
+  - name: bidfloor
+    type: number
+    description: >-
+      Minimum price in USD applied to a specific ad unit. Note the case
+      divergence: the JSON Schema in prebid-server names it `bidfloor`
+      (lowercase), while the Prebid.js adapter docs and the Prebid docs bidder
+      page both document `bidFloor` (camelCase), and the Prebid.js example uses
+      both spellings in the same snippet. An integrator cannot tell from the
+      published material which one the server honours.
+idempotency:
+  supported: false
+  detail: >-
+    No idempotency key, no request deduplication semantics and no retry contract
+    is documented. OpenRTB auctions are inherently single-shot and time-boxed,
+    but the provider publishes nothing about retry behaviour. No `Idempotency`
+    pointer is wired in apis.yml.
+pagination:
+  supported: false
+  detail: Not applicable — a bid endpoint returns one auction response.
+versioning:
+  scheme: none-published
+  detail: >-
+    No API version is present in the endpoint path or in any header the provider
+    documents. Version movement is only observable indirectly, through the
+    Prebid adapter's own version history in the upstream repositories.
+error_envelope:
+  format: none-published
+  detail: >-
+    No error catalog, status-code table or error envelope is published. Prebid
+    Server surfaces bidder failures as its own generic errors; Silverpush
+    documents none of its own. That is why no errors/ artifact was written.
+rate_limit_signalling:
+  headers: none-published
+  detail: See rate-limits/silveredge-rate-limits.yml — nothing documented.
+request_tracing:
+  correlation_id: OpenRTB BidRequest.id
+  detail: >-
+    The only correlation handle is the standard OpenRTB request id. No
+    provider-specific request-id header is documented.
+privacy_signalling:
+  detail: >-
+    Consent and privacy signals travel in the standard OpenRTB regs/user
+    extensions. Silverpush declares support for the IAB GPP string, the US
+    Privacy (CCPA) string, COPPA and the SupplyChain object, and declares NO
+    support for IAB TCF EU. See conformance/silveredge-conformance.yml.
+cross_references:
+  authentication: authentication/silveredge-authentication.yml
+  conformance: conformance/silveredge-conformance.yml
+  lifecycle: lifecycle/silveredge-lifecycle.yml
+  rate_limits: rate-limits/silveredge-rate-limits.yml
+  json_schema: json-schema/silveredge-prebid-bidder-params.json

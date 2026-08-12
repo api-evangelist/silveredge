@@ -1,0 +1,139 @@
+generated: '2026-08-12'
+method: probed
+source: live GET probes of every host in apis.yml
+summary: >-
+  No /.well-known/ document is served on any Silverpush-controlled host. Every
+  path on silverpush.co returns a genuine HTTP 404. Every path on
+  chocolateplatform.com returns HTTP 200 with the same 962-byte React SPA shell
+  (text/html) — that is a single-page-app catch-all, NOT a document, and it is
+  recorded as a MISS. No WellKnown or SecurityTxt pointer is wired in apis.yml
+  because no path returned a real document.
+hosts:
+- host: https://silverpush.co
+  behavior: real-404s
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /swagger.json
+    status: 404
+  - path: /api-docs
+    status: 404
+  - path: /ads.txt
+    status: 404
+  - path: /app-ads.txt
+    status: 404
+  - path: /sellers.json
+    status: 404
+    note: >-
+      Notable absence — Silverpush operates an SSP (Chocolate) and the IAB Tech
+      Lab sellers.json transparency file is the machine-readable artifact that
+      role is expected to publish. It is not served on either corporate host.
+  - path: /robots.txt
+    status: 200
+    file: silveredge-robots.txt
+  - path: /sitemap.xml
+    status: 200
+    note: 283 URLs, none developer/API-related
+- host: https://chocolateplatform.com
+  behavior: spa-catch-all
+  note: >-
+    Returns 200 text/html (962 bytes, the Vite/React index shell) for every path
+    probed, including /robots.txt and /sitemap.xml. Treated as a miss on all
+    paths. The one exception observed was /api-docs, which returned a real 404
+    with application/json.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: miss-html-shell
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: miss-html-shell
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    result: miss-html-shell
+  - path: /.well-known/api-catalog
+    status: 200
+    result: miss-html-shell
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    result: miss-html-shell
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: miss-html-shell
+  - path: /.well-known/agent.json
+    status: 200
+    result: miss-html-shell
+  - path: /llms.txt
+    status: 200
+    result: miss-html-shell
+  - path: /openapi.json
+    status: 200
+    result: miss-html-shell
+  - path: /swagger.json
+    status: 200
+    result: miss-html-shell
+  - path: /sellers.json
+    status: 200
+    result: miss-html-shell
+  - path: /ads.txt
+    status: 200
+    result: miss-html-shell
+  - path: /app-ads.txt
+    status: 200
+    result: miss-html-shell
+  - path: /api-docs
+    status: 404
+- host: https://parallels.silverpush.co
+  behavior: spa-catch-all
+  note: >-
+    Returns 200 text/html (2076 bytes) for every path including /openapi.json,
+    /graphql, /docs and all /.well-known/* paths. All misses.
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: miss-html-shell
+  - path: /.well-known/agent.json
+    status: 200
+    result: miss-html-shell
+  - path: /openapi.json
+    status: 200
+    result: miss-html-shell
+  - path: /graphql
+    status: 200
+    result: miss-html-shell
+non_resolving_hosts:
+  note: >-
+    Probed and recorded because their absence is itself the finding — no
+    developer subdomain exists on either brand.
+  hosts:
+  - api.silverpush.co
+  - docs.silverpush.co
+  - developer.silverpush.co
+  - developers.silverpush.co
+  - dev.silverpush.co
+  - app.silverpush.co
+  - mirrors.silverpush.co
+  - api.chocolateplatform.com
+  - docs.chocolateplatform.com
+  - developer.chocolateplatform.com
+  - developers.chocolateplatform.com
+  - support.chocolateplatform.com
+  - app.chocolateplatform.com
+  - dashboard.chocolateplatform.com
+  - maven.chocolateplatform.com

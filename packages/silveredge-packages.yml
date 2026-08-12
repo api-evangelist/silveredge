@@ -1,0 +1,205 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://chocolateplatform.com/download-sdk (SDK page, read from the site's own
+  JS bundle), https://github.com/chocolateplatform (first-party sample apps),
+  https://github.com/chocolateplatform/download-links (first-party download
+  redirector + version.json)
+ownership_note: >-
+  Chocolate Platform is Silverpush's mobile video SSP — the site titles itself
+  "Chocolate Platform by SilverPush" and the Prebid Server bidder registered as
+  "silverpush" is maintained from prebid@silverpush.co and points at
+  prebid.chocolateplatform.co. The chocolateplatform.com / github.com/chocolateplatform
+  surface is therefore first-party to this company on a second brand domain.
+summary: >-
+  Silverpush publishes no client library on any public package registry — npm,
+  PyPI, Maven Central, CocoaPods trunk, RubyGems, crates.io and NuGet all return
+  nothing for silverpush, silveredge or chocolateplatform. What it does publish
+  is the Chocolate Mediation SDK for mobile app publishers, distributed outside
+  the registries. As of this pass EVERY distribution endpoint the company
+  advertises for that SDK is unreachable, so no first-party client library is
+  actually obtainable. That is why no `SDKs` pointer is wired in apis.yml: the
+  packages are documented but not installable, and crediting them would assert a
+  usable SDK surface that does not exist.
+packages:
+- language: kotlin/java
+  platform: android
+  registry: maven
+  name: com.chocolateplatform:chocolate-sdk
+  url: https://maven.chocolateplatform.com/releases
+  install: "implementation 'com.chocolateplatform:chocolate-sdk:3.2.1'"
+  official: true
+  version: 3.2.1
+  published: '2024-03-10'
+  availability: unreachable
+  note: >-
+    The current chocolateplatform.com/download-sdk page states Android SDK 3.2.1,
+    released March 10 2024, min API 21, ~420 KB, and gives this Gradle snippet.
+    The repository host maven.chocolateplatform.com has NO DNS A record
+    (NXDOMAIN as of 2026-08-12), so the dependency cannot resolve. Maven Central
+    returns 0 artifacts for group com.chocolateplatform. Version and date are the
+    provider's own published values, not a registry read — there is no registry
+    metadata endpoint to query.
+- language: kotlin/java
+  platform: android
+  registry: maven
+  name: com.vdopia.ads.lw:coresdk
+  url: https://dl.bintray.com/vdopiacorp/sdk
+  install: "implementation 'com.vdopia.ads.lw:coresdk:2.8.14'"
+  official: true
+  version: 2.8.14
+  published: null
+  availability: unreachable
+  note: >-
+    The predecessor Android coordinate, still pinned in the first-party sample
+    app app/build.gradle at github.com/chocolateplatform/android-chocolate-sample
+    (last pushed 2020-02-28). Distributed from JFrog Bintray, which JFrog shut
+    down in 2021; dl.bintray.com/vdopiacorp/sdk returns 404. Not on Maven
+    Central (0 results for group com.vdopia.ads.lw). No publish date recorded —
+    the registry that held it no longer exists, so there is nothing left to read
+    a date from.
+- language: swift/objective-c
+  platform: ios
+  registry: cocoapods
+  name: ChocolatePlatformSDK
+  url: https://chocolateplatform.com/download-sdk
+  install: "pod 'ChocolatePlatformSDK', '~> 3.2.0'"
+  official: true
+  version: 3.2.0
+  published: '2024-02-28'
+  availability: unreachable
+  note: >-
+    Advertised on the provider's own SDK page as iOS SDK 3.2.0, released
+    February 28 2024, iOS 12.0+, ~380 KB. The pod is NOT published to CocoaPods
+    trunk — trunk.cocoapods.org/api/v1/pods/ChocolatePlatformSDK returns 404
+    "No pod found with the specified name", so `pod install` cannot resolve it.
+- language: swift
+  platform: ios
+  registry: swift-package-manager
+  name: chocolateplatform/ios-sdk
+  url: https://github.com/chocolateplatform/ios-sdk.git
+  install: '.package(url: "https://github.com/chocolateplatform/ios-sdk.git", from: "3.2.0")'
+  official: true
+  version: 3.2.0
+  published: '2024-02-28'
+  availability: unreachable
+  note: >-
+    The Swift Package Manager coordinate given on the provider's SDK page. The
+    repository does not exist publicly — GET /repos/chocolateplatform/ios-sdk
+    returns 404 on the GitHub API, and it is absent from the org's 12 public
+    repos.
+- language: objective-c
+  platform: ios
+  registry: cdn
+  name: ChocolatePlatform_iOS_SDK
+  url: https://chocolateplatform.github.io/download-links/param-sdk.html?sdk=manual&version=latest
+  install: manual framework download
+  official: true
+  version: 3.3.1.B
+  published: null
+  availability: unreachable
+  note: >-
+    The older manual-download channel. Version read from the provider's own
+    version.json in github.com/chocolateplatform/download-links (manual.latest =
+    3.3.1.B) — no registry metadata endpoint exists for a manual download, and
+    the file carries no date. The redirector sends the browser to
+    gitlab.com/chocolateplatform-public/ios-sdk-binaries/-/jobs/artifacts/release_v3.3.1.B/download?job=sdk,
+    which returns 404; the GitLab project exists but its last activity was
+    2020-08-19.
+- language: c#
+  platform: unity
+  registry: cdn
+  name: ChocolatePlatformAds
+  url: http://d25goy08v4a993.cloudfront.net/ChocolatePlatformAds_v3.1.0.B.unitypackage
+  install: import .unitypackage
+  official: true
+  version: 3.1.0.B
+  published: null
+  availability: unreachable
+  note: >-
+    Unity plugin. Version read from the provider's own version.json
+    (unity.latest = 3.1.0.B); the URL is version-pinned by the download script
+    rather than floating. The CloudFront distribution d25goy08v4a993.cloudfront.net
+    no longer answers (connection fails, no HTTP status). No date is published
+    anywhere on this channel.
+sample_apps:
+  note: >-
+    First-party integration samples, all in github.com/chocolateplatform. These
+    are real and still readable — they are the only part of the SDK surface a
+    developer can still obtain. Every one was last pushed between 2018 and 2020.
+  repos:
+  - name: android-chocolate-sample
+    url: https://github.com/chocolateplatform/android-chocolate-sample
+    language: java
+    last_push: '2020-02-28'
+  - name: android-kotlin-chocolate-sample
+    url: https://github.com/chocolateplatform/android-kotlin-chocolate-sample
+    language: kotlin
+    last_push: '2020-01-14'
+  - name: android-native-inview
+    url: https://github.com/chocolateplatform/android-native-inview
+    language: java
+    last_push: '2019-12-16'
+  - name: ios-native-sample
+    url: https://github.com/chocolateplatform/ios-native-sample
+    language: objective-c/swift
+    last_push: '2020-01-15'
+  - name: xamarin-android-chocolate-sample
+    url: https://github.com/chocolateplatform/xamarin-android-chocolate-sample
+    language: c#
+    last_push: '2020-02-27'
+  - name: xamarin-ios-chocolate-sample
+    url: https://github.com/chocolateplatform/xamarin-ios-chocolate-sample
+    language: c#
+    last_push: '2019-08-15'
+  - name: unity-universal-sample-app
+    url: https://github.com/chocolateplatform/unity-universal-sample-app
+    language: c#
+    last_push: '2019-12-13'
+  - name: cocos2dx-cpp-android-sample
+    url: https://github.com/chocolateplatform/cocos2dx-cpp-android-sample
+    language: c++
+    last_push: '2019-06-04'
+  - name: cocos2dx-js-sample
+    url: https://github.com/chocolateplatform/cocos2dx-js-sample
+    language: javascript
+    last_push: '2019-06-02'
+  - name: cordova_android
+    url: https://github.com/chocolateplatform/cordova_android
+    language: java
+    last_push: '2018-09-25'
+registries_checked:
+- registry: npm
+  query: silverpush / chocolateplatform
+  result: no first-party package
+- registry: pypi
+  query: silverpush
+  result: 404
+- registry: maven-central
+  query: 'g:com.chocolateplatform, g:com.vdopia.ads.lw'
+  result: 0 artifacts
+- registry: cocoapods
+  query: ChocolatePlatformSDK / ChocolatePlatform_iOS_SDK
+  result: 404 no pod found
+- registry: bintray
+  query: vdopiacorp/sdk
+  result: 404 (service retired 2021)
+x-evidence:
+  fetched: '2026-08-12'
+  probes:
+  - url: https://maven.chocolateplatform.com/releases
+    status: 0
+    note: no DNS A record
+  - url: https://trunk.cocoapods.org/api/v1/pods/ChocolatePlatformSDK
+    status: 404
+  - url: https://api.github.com/repos/chocolateplatform/ios-sdk
+    status: 404
+  - url: https://gitlab.com/chocolateplatform-public/ios-sdk-binaries/-/jobs/artifacts/release_v3.3.1.B/download?job=sdk
+    status: 404
+  - url: http://d25goy08v4a993.cloudfront.net/ChocolatePlatformAds_v3.1.0.B.unitypackage
+    status: 0
+  - url: https://dl.bintray.com/vdopiacorp/sdk/
+    status: 404
+  - url: https://search.maven.org/solrsearch/select?q=g:%22com.chocolateplatform%22
+    status: 200
+    note: numFound 0

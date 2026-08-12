@@ -1,0 +1,137 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://docs.prebid.org/dev-docs/bidders/silverpush.html (the bidder page's
+  own front-matter capability declarations),
+  https://github.com/prebid/prebid-server/blob/master/static/bidder-info/silverpush.yaml,
+  https://github.com/prebid/Prebid.js/blob/master/modules/silverpushBidAdapter.md
+summary: >-
+  Silverpush's conformance posture is entirely industry-standard advertising,
+  not general-purpose web API standards. The declarations below are the
+  provider's own machine-readable capability flags in the Prebid bidder
+  registry — they are published by Silverpush, not inferred by us. There is no
+  OpenAPI, no RFC 9457 error format, no OAuth/OIDC surface and no JSON:API or
+  OData conformance to assert.
+standards:
+- id: openrtb
+  name: IAB OpenRTB
+  conforms: true
+  version: '2.x'
+  evidence: >-
+    Registered as a Prebid Server bidder adapter; the Prebid.js module is titled
+    "Silverpush OpenRTB Bidder Adapter" and the bid-params JSON Schema is titled
+    the same. Prebid Server speaks OpenRTB 2.x to every registered bidder
+    endpoint, so the contract at prebid.chocolateplatform.co/bidder/ is an
+    OpenRTB bid endpoint.
+- id: prebid
+  name: Prebid.js / Prebid Server adapter
+  conforms: true
+  evidence: >-
+    biddercode "silverpush"; pbjs true and pbs true in the Prebid docs bidder
+    page front matter. Both a client-side (Prebid.js module
+    silverpushBidAdapter.js) and a server-side (prebid-server bidder-info +
+    bidder-params) adapter are published upstream.
+- id: iab-schain
+  name: IAB Tech Lab Supply Chain Object (sellers.json / SupplyChain)
+  conforms: partial
+  evidence: >-
+    schain_supported true in the Prebid bidder page. However neither
+    silverpush.co nor chocolateplatform.com serves the companion /sellers.json
+    transparency file the same IAB programme expects of an SSP — both return a
+    404 / SPA shell respectively. Supply-chain object support is declared;
+    seller transparency is not published.
+- id: iab-gpp
+  name: IAB Global Privacy Platform
+  conforms: true
+  evidence: gpp_supported true in the Prebid bidder page front matter.
+- id: iab-usp-ccpa
+  name: IAB US Privacy String (CCPA)
+  conforms: true
+  evidence: >-
+    usp_supported true in the Prebid bidder page front matter; Chocolate
+    Platform publishes a /ccpa page and an /opt-out page.
+- id: coppa
+  name: COPPA signalling
+  conforms: true
+  evidence: coppa_supported true in the Prebid bidder page front matter.
+- id: iab-tcf-eu
+  name: IAB TCF v2 (EU GDPR consent framework)
+  conforms: false
+  evidence: >-
+    tcfeu_supported FALSE in the Prebid bidder page front matter — the provider
+    explicitly declares it does NOT support the EU transparency and consent
+    framework, despite publishing a /gdpr and /gdpr-compliance page on
+    chocolateplatform.com. This is the provider's own declaration, recorded as
+    published.
+- id: prebid-price-floors
+  name: Prebid Price Floors module
+  conforms: true
+  evidence: floors_supported true; bidFloor is a documented optional bid parameter.
+- id: vast
+  name: IAB VAST / VPAID video ad serving
+  conforms: true
+  evidence: >-
+    The chocolateplatform.com SDK page declares a "VAST/VPAID compliant player"
+    for Android and a "VAST 4.1 compliant video player" for iOS.
+- id: omid
+  name: IAB OM SDK (OMID) viewability
+  conforms: true
+  evidence: >-
+    "OMID-compliant viewability" declared for the iOS SDK; "Viewability
+    measurement (MOAT, IAS)" declared for the Android SDK on the same page.
+- id: skadnetwork
+  name: Apple SKAdNetwork attribution
+  conforms: true
+  evidence: >-
+    "SKAdNetwork attribution support" declared for the iOS SDK.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document found on any host after probing
+    /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs,
+    /docs and /redoc against silverpush.co, chocolateplatform.com,
+    parallels.silverpush.co and every non-resolving developer subdomain.
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: No error contract of any kind is published.
+- id: oauth2
+  name: OAuth 2.0
+  conforms: false
+  evidence: >-
+    No authorization server metadata served; onboarding is manual partner
+    approval issuing a publisherId. See authentication/silveredge-authentication.yml.
+compliance:
+  note: >-
+    Privacy-regime support below is the provider's own published declaration in
+    the Prebid bidder registry plus its own regime pages. No SOC 2, ISO 27001,
+    PCI DSS, HIPAA or FedRAMP attestation is published on any host, and no trust
+    center exists — probe-security-programs.py returned trust=none.
+  regimes:
+  - name: CCPA / US Privacy
+    published: true
+    url: https://chocolateplatform.com/ccpa
+  - name: GDPR
+    published: true
+    url: https://chocolateplatform.com/gdpr
+    note: Policy page published, but IAB TCF EU support is declared false.
+  - name: COPPA
+    published: true
+    url: https://docs.prebid.org/dev-docs/bidders/silverpush.html
+  - name: Consumer opt-out (NAI / DAA / IAB)
+    published: true
+    url: https://chocolateplatform.com/opt-out
+  certifications: []
+x-evidence:
+  fetched: '2026-08-12'
+  probes:
+  - url: https://docs.prebid.org/dev-docs/bidders/silverpush.html
+    status: 200
+  - url: https://raw.githubusercontent.com/prebid/prebid.github.io/master/dev-docs/bidders/silverpush.md
+    status: 200
+  - url: https://silverpush.co/sellers.json
+    status: 404
+  - url: https://chocolateplatform.com/openapi.json
+    status: 200
+    note: SPA HTML shell, not a spec

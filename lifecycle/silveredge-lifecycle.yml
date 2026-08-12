@@ -1,0 +1,119 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://silverpush.co (site + sitemap), https://chocolateplatform.com (SPA
+  route table read from the site's own JS bundle),
+  https://github.com/chocolateplatform, https://github.com/SilverPush,
+  https://docs.prebid.org/dev-docs/bidders/silverpush.html
+summary: >-
+  Silverpush publishes no status page, no SLA, no deprecation or sunset policy,
+  and no dated changelog for any surface. What the public record does show is a
+  developer surface in advanced decay: the SDK page still advertises 2024
+  releases, but every channel that would deliver them is gone, the release-notes
+  links on that page point at routes the application does not define, and the
+  sample-app repositories have not been touched since 2020.
+status_page:
+  published: false
+  probes:
+  - url: https://silverpush.co/status
+    status: 404
+  - url: https://status.silverpush.co
+    status: 0
+    note: no DNS
+  note: >-
+    No StatusPage pointer is wired in apis.yml — nothing is served.
+deprecation_policy:
+  published: false
+  sunset_header: not-documented
+  deprecation_header: not-documented
+  note: >-
+    No RFC 8594 Sunset or Deprecation header usage is documented, and no
+    end-of-life policy exists on either brand site. No Deprecation pointer is
+    wired.
+sla:
+  published: false
+changelog:
+  published: false
+  detail: >-
+    chocolateplatform.com/download-sdk renders "Release Notes" links to
+    /release-notes/android-sdk and /release-notes/ios-sdk, but neither path is
+    in the application's route table (the SPA defines 27 routes and neither is
+    among them), so both resolve to the catch-all shell. No changelog/ artifact
+    was written because there is no dated changelog to structure.
+  probes:
+  - url: https://silverpush.co/changelog
+    status: 404
+  - url: https://silverpush.co/release-notes
+    status: 404
+versions_observed:
+- surface: Chocolate Mediation SDK — Android
+  version: 3.2.1
+  date: '2024-03-10'
+  source: chocolateplatform.com/download-sdk
+  obtainable: false
+- surface: Chocolate Mediation SDK — iOS
+  version: 3.2.0
+  date: '2024-02-28'
+  source: chocolateplatform.com/download-sdk
+  obtainable: false
+- surface: Chocolate iOS SDK (manual channel)
+  version: 3.3.1.B
+  date: null
+  source: github.com/chocolateplatform/download-links/version.json
+  obtainable: false
+- surface: Chocolate Unity plugin
+  version: 3.1.0.B
+  date: null
+  source: github.com/chocolateplatform/download-links/version.json
+  obtainable: false
+decay_signals:
+  note: >-
+    Recorded because these are the only dated, provider-published evidence of
+    lifecycle state available for this company. Each is a probe result, not an
+    inference.
+  signals:
+  - signal: every advertised SDK distribution endpoint is unreachable
+    detail: >-
+      maven.chocolateplatform.com has no DNS record; the CocoaPods pod is not on
+      trunk (404); the Swift Package Manager repo github.com/chocolateplatform/ios-sdk
+      returns 404; the GitLab release artifact returns 404; the CloudFront Unity
+      package host does not answer; Bintray was retired in 2021. Full probe
+      table in packages/silveredge-packages.yml.
+  - signal: SDK sample repositories dormant
+    detail: >-
+      All ten first-party sample apps in github.com/chocolateplatform were last
+      pushed between 2018-09-25 and 2020-02-28. The org itself was last updated
+      2018-02-02.
+  - signal: SilverPush GitHub org holds only Prebid forks
+    detail: >-
+      github.com/SilverPush contains three repositories, all forks of Prebid
+      projects (prebid-server, Prebid.js, prebid.github.io), last pushed 2023.
+      No first-party source is published there.
+  - signal: registered Prebid endpoint would not complete a TLS handshake
+    detail: >-
+      https://prebid.chocolateplatform.co/bidder/?identifier=prebidchoc — the
+      endpoint Silverpush registered upstream in prebid-server — resolves to
+      143.244.220.62 and answers 308 over plain HTTP, but the HTTPS handshake
+      failed with "tlsv1 alert internal error" from this client on 2026-08-12.
+      Recorded as an observation; a single client's TLS failure is not proof the
+      endpoint is down for Prebid Server itself.
+  - signal: apex domain of the bid endpoint is dark
+    detail: >-
+      chocolateplatform.co (the .co apex under which the bid endpoint sits) has
+      no A record, while the brand's live site is on chocolateplatform.com.
+support:
+  channel: https://silverpush.co/contact/
+  programmatic_contact: prebid@silverpush.co
+x-evidence:
+  fetched: '2026-08-12'
+  probes:
+  - url: https://silverpush.co/status
+    status: 404
+  - url: https://silverpush.co/changelog
+    status: 404
+  - url: https://silverpush.co/release-notes
+    status: 404
+  - url: https://chocolateplatform.com/download-sdk
+    status: 200
+  - url: https://api.github.com/orgs/chocolateplatform/repos
+    status: 200
